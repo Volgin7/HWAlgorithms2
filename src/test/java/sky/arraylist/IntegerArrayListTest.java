@@ -299,7 +299,6 @@ public class IntegerArrayListTest {
         for (int i = 0; i < 1000; i++) {
             integerList.add(i+3);
         }
-
         Assertions.assertEquals(1002, integerList.size());
     }
 }
