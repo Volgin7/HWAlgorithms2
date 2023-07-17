@@ -242,8 +242,8 @@ public class IntegerArrayListTest {
     }
 
     @Test
-    @DisplayName("Test of sort method")
-    void sortTest() {
+    @DisplayName("Test of sortSelect method")
+    void sortSelectTest() {
         IntegerArrayList integerList = new IntegerArrayList();
         integerList.add(1);
         integerList.add(3);
@@ -255,12 +255,30 @@ public class IntegerArrayListTest {
         integerList2.add(3);
 
         Assertions.assertFalse(integerList.equals(integerList2));
-        integerList.sort();
+        integerList.sortSelect();
         Assertions.assertTrue(integerList.equals(integerList2));
     }
 
     @Test
-    @DisplayName("Test of binaty method")
+    @DisplayName("Test of sortQuick method")
+    void sortQuickTest() {
+        IntegerArrayList integerList = new IntegerArrayList();
+        integerList.add(1);
+        integerList.add(3);
+        integerList.add(2);
+
+        IntegerArrayList integerList2 = new IntegerArrayList();
+        integerList2.add(1);
+        integerList2.add(2);
+        integerList2.add(3);
+
+        Assertions.assertFalse(integerList.equals(integerList2));
+        integerList.sortQuick(0, integerList.size() - 1);
+        Assertions.assertTrue(integerList.equals(integerList2));
+    }
+
+    @Test
+    @DisplayName("Test of binary method")
     void binarySearchTest() {
         IntegerArrayList integerList = new IntegerArrayList();
         integerList.add(1);
@@ -269,5 +287,19 @@ public class IntegerArrayListTest {
         integerList.add(3);
 
         Assertions.assertEquals(1, integerList.binarySearch(777));
+    }
+
+    @Test
+    @DisplayName("Test of grow method")
+    void growTest() {
+        IntegerArrayList integerList = new IntegerArrayList();
+        integerList.add(1);
+        integerList.add(2);
+
+        for (int i = 0; i < 1000; i++) {
+            integerList.add(i+3);
+        }
+
+        Assertions.assertEquals(1002, integerList.size());
     }
 }

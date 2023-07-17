@@ -15,8 +15,10 @@ public interface IntegerArrayListInterface {
     boolean isEmpty();
     void clear();
     Integer[] toArray();
-    void sort();
+    void sortQuick(int begin, int end);
+    void sortSelect();
     int binarySearch(Integer number);  // returns index of item, returns -1 if item not found
 
+    void grow();
 
 }

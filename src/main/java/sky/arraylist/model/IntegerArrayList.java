@@ -8,7 +8,7 @@ import sky.arraylist.exception.StorageIsFullException;
 import java.util.Arrays;
 
 public class IntegerArrayList implements IntegerArrayListInterface{
-    private final Integer[] storage;
+    private Integer[] storage;
     private final int MAX_SIZE = 5;
     int size;
     public IntegerArrayList() {
@@ -18,6 +18,9 @@ public class IntegerArrayList implements IntegerArrayListInterface{
     @Override
     public Integer add(Integer item) {
         validateItem(item);
+        if(size == storage.length) {
+            grow();
+        }
         validateSize();
         storage[size++] = item;
         return item;
@@ -140,7 +143,7 @@ public class IntegerArrayList implements IntegerArrayListInterface{
         }
     }
     @Override
-    public void sort() {
+    public void sortSelect() {
         int i, j, minIndex;
         int size = this.size;
         for (i = 0; i < size - 1; i++) {
@@ -155,7 +158,30 @@ public class IntegerArrayList implements IntegerArrayListInterface{
             }
         }
     }
-    public void swap(Integer[] array, int index1, int index2) {
+    public void sortQuick(int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(storage, begin, end);
+
+            sortQuick(begin, partitionIndex - 1);
+            sortQuick(partitionIndex + 1, end);
+        }
+    }
+    private static int partition(Integer[] array, int begin, int end) {
+        int pivot = array[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (array[j] <= pivot) {
+                i++;
+                swap(array, i, j);
+            }
+        }
+
+        swap(array, i + 1, end);
+        return i + 1;
+    }
+
+    public static void swap(Integer[] array, int index1, int index2) {
         Integer tmp = array[index1];
         array[index1] = array[index2];
         array[index2] = tmp;
@@ -181,6 +207,12 @@ public class IntegerArrayList implements IntegerArrayListInterface{
         return index;
     }
 
+    @Override
+    public void grow() {
+        int oldCapacity = storage.length;
+        int newCapacity = oldCapacity + (oldCapacity >> 1) + 1;
+        storage = Arrays.copyOf(storage, newCapacity);
+    }
 
 
 }
